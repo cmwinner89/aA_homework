@@ -1,101 +1,73 @@
-# quadratic search
+ $fishy_arr = ['fish', 'fiiish', 'fiiiiish', 'fiiiish', 'fffish', 'ffiiiiisshh', 'fsh', 'fiiiissshhhhhh']
+ 
+ def sluggish_octopus
+    biggest = ""
 
-def quadratic_biggest_fish(fishes)
-  fishes.each_with_index do |fish1, i1|
-    max_length = true
-    
-    fishes.each_with_index do |fish2, i2|
-      next if i1 == i2
-      max_length = false if fish2.length > fish1.length
+    $fishy_arr.each_with_index do |el1, idx1|
+        $fishy_arr.each_with_index do |el2, idx2|
+            if idx2 < idx1
+                biggest = el1 if el1.length > el2.length
+            end
+        end
     end
-    
-    return fish1 if max_length
-  end
+    biggest
+ end
 
+ p sluggish_octopus
+
+#  p sluggish_octopus
+# class Array
+#      def merge_sort(&prc)
+#         prc ||= Proc.new{|a, b| a <=> b}
+#         return self if self.count <=1
+
+#         mid = self.length/2
+#         sorted_left = self.take(mid).merge_sort(&prc)
+#         sorted_right = self.drop(mid).merge_sort(&prc)
+
+#         Array.merge(sorted_left, sorted_right, &prc)
+#      end
+
+#      def merge(left, right, &prc)
+#         merged = []
+
+#         until left.empty? || right.empty?
+#             case prc.call(left.first, right.first)
+#             when 1
+#                 merge << right.shift
+#             when 0 
+#                 merged << left.shift
+#             when -1
+#                 merged << left.shift
+#             end
+#         end
+#         merged.concat(left)
+#         merged.concat(right)
+
+#         merged
+#      end
+# end
+
+# def dominant_octopus
+
+#     prc = Proc.new {|a, b| b <=> a}
+
+#     # $fishy_arr.merge_sort(&prc)[0]
+# end
+
+# p dominant_octopus
+
+def clever_octopus
+    big_fish = ""
+    $fishy_arr.each {|fish| big_fish = fish if big_fish.length < fish.length }
+    big_fish
 end
 
-# n log n search
-class Array
-  #this should look familiar
-  def merge_sort(&prc)
-    prc ||= Proc.new { |x, y| x <=> y }
-
-    return self if count <= 1
-
-    midpoint = count / 2
-    sorted_left = self.take(midpoint).merge_sort(&prc)
-    sorted_right = self.drop(midpoint).merge_sort(&prc)
-
-    Array.merge(sorted_left, sorted_right, &prc)
-  end
-
-  private
-  def self.merge(left, right, &prc)
-    merged = []
-
-    until left.empty? || right.empty?
-      case prc.call(left.first, right.first)
-      when -1
-        merged << left.shift
-      when 0
-        merged << left.shift
-      when 1
-        merged << right.shift
-      end
+def slow_dance(dir, arr)
+    arr.each_with_index do |el, idx|
+       return idx if el == dir 
     end
-
-    merged.concat(left)
-    merged.concat(right)
-
-    merged
-  end
 end
+tiles_array = ["up", "right-up", "right", "right-down", "down", "left-down", "left",  "left-up" ]
 
-def nlogn_biggest_fish(fishes)
-  # sort the array longest to shortest
-  prc = Proc.new { |x, y| y.length <=> x.length }
-  #return the first element
-  fishes.merge_sort(&prc)[0]
-end
-
-# linear search
-def linear_biggest_fish(fishes)
-  #hold the biggest fish
-  biggest_fish = fishes.first
-
-  fishes.each do |fish|
-    if fish.length > biggest_fish.length
-      #update the biggest fish
-      biggest_fish = fish
-    end
-  end
-
-  biggest_fish
-
-end
-
-# linear octopus dance
-# tiles_array = ["up", "right-up", "right", "right-down", "down", "left-down", "left",  "left-up" ]
-
-def slow_dance(direction, tiles_array)
-  tiles_array.each_with_index do |tile, index|
-    return index if tile == direction
-  end
-end
-
-# constant octopus dance
-#use a hash for constant lookup
-tiles_hash = {
-    "up" => 0,
-    "right-up" => 1,
-    "right"=> 2,
-    "right-down" => 3,
-    "down" => 4,
-    "left-down" => 5,
-    "left" => 6,
-    "left-up" => 7
-}
-
-def fast_dance(direction, tiles_hash)
-  tiles_hash[direction]
-end
+p   slow_dance("up", tiles_array)
